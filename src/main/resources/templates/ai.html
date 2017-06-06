@@ -24,6 +24,8 @@
         <button name="button" onclick="sendRequest(this.form)">Send Request</button>
     </div>
     <div><textarea name="response" readonly="readonly"></textarea></div>
+
+    <img id="ItemPreview" src="" />
 </form>
 <script>
     function sendRequest(form) {
@@ -44,8 +46,9 @@
                 success: function (data) {
                     console.log(data);
                     form.elements['button'].disabled = false;
-                    form.elements['response'].value += "\n" + data;
+                    form.elements['response'].value += "\n" + data.reply;
                     form.elements['response'].scrollTop = form.elements['response'].scrollHeight
+                    document.getElementById("ItemPreview").src = "data:image/png;base64," + data.bytes;
                 }
             });
         });
