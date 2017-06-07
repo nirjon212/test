@@ -58,15 +58,20 @@ public class EchatBotController {
       String braBrand = queryResponse.getResult().getParameters().getBraBrand();
       // Now do something with the brand
     } else if (action != null && action.equalsIgnoreCase("user.bra.size.action")) {
-      if (braSize != null && braSize.size() > 0) bytes = sendImage();
+      if (braSize != null && braSize.size() > 0) bytes = sendImage("/testbra.jpeg");
+    }
+    else if (action.equalsIgnoreCase("user.panty.size")) {
+
+        bytes = sendImage("/testpanty.jpeg");
+
     }
     return new ChatBotResponseMessage(reply, bytes);
   }
 
   @RequestMapping(value = "/image", method = RequestMethod.GET, produces = "image/jpg")
-  public @ResponseBody byte[] sendImage() {
+  public @ResponseBody byte[] sendImage(String image) {
     try {
-      InputStream is = this.getClass().getResourceAsStream("/testbra.jpeg");
+      InputStream is = this.getClass().getResourceAsStream(image);
       BufferedImage img = ImageIO.read(is);
       ByteArrayOutputStream bao = new ByteArrayOutputStream();
       // Write to output stream
