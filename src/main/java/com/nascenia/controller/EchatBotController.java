@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -53,8 +54,11 @@ public class EchatBotController {
       bytes = sendImage();
     }*/
 
-    if (action != null && action.equalsIgnoreCase("user.bra.size.action")) {
-      bytes = sendImage();
+    if (action != null && action.equalsIgnoreCase(("brabrand.action"))) {
+      String braBrand = queryResponse.getResult().getParameters().getBraBrand();
+      // Now do something with the brand
+    } else if (action != null && action.equalsIgnoreCase("user.bra.size.action")) {
+      if (braSize != null && braSize.size() > 0) bytes = sendImage();
     }
     return new ChatBotResponseMessage(reply, bytes);
   }

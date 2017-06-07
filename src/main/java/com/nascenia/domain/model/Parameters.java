@@ -9,7 +9,17 @@ public class Parameters {
 
   private List<String> braColor;
 
+  private String braBrand;
+
   public Parameters() {}
+
+  public String getBraBrand() {
+    return braBrand;
+  }
+
+  public void setBraBrand(String braBrand) {
+    this.braBrand = braBrand;
+  }
 
   public List<String> getBraSize() {
     return braSize;
