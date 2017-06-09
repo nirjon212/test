@@ -9,12 +9,12 @@ public class ChatBotResponseMessage {
 
   public ChatBotResponseMessage() {}
 
-    public ChatBotResponseMessage(String reply, byte[] bytes) {
-        this.reply = reply;
-        this.bytes = bytes;
-    }
+  public ChatBotResponseMessage(String reply, byte[] bytes) {
+    this.reply = reply;
+    this.bytes = bytes;
+  }
 
-    public String getReply() {
+  public String getReply() {
     return reply;
   }
 

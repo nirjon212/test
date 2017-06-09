@@ -34,6 +34,7 @@
         if (query == null || query == "") {
             return;
         }
+        form.elements['query'].value='';
         $("div#response").append("<p> you: " + query + "</p>");
 
         $(document).ready(function () {

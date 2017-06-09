@@ -1,11 +1,15 @@
 package com.nascenia.controller;
 
 import com.nascenia.domain.model.ChatBotResponseMessage;
+import com.nascenia.domain.model.Product;
 import com.nascenia.domain.model.QueryResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -30,11 +34,17 @@ public class EchatBotController {
       throws URISyntaxException, IOException {
 
     final HttpClient httpClient = HttpClientBuilder.create().build();
-    URI uri = buildUriBuilder(query);
+    URI uri = buildUriBuilderApiAi(query);
     HttpGet httpGet = new HttpGet(uri);
     httpGet.setHeader("Authorization", "Bearer d5813c606f1543069cfe0b522c533d54");
     HttpResponse rawResponse = httpClient.execute(httpGet);
     StringBuffer result = retrieveAylienApiResponse(rawResponse);
+
+    /* uri = buildUriBuilderMagento("/index.php/rest/V1/integration/admin/token");
+    HttpPost httpPost = new HttpPost(uri);
+    httpPost.setEntity(new StringEntity("{\"username\":\"" + "mozammal" + "\",\"password\":\"" + "1234567891Tomal" + "\"}",
+            ContentType.create("application/json")));*/
+
     log.info(result.toString());
     log.info(
         "_________________________________________________________________________________________________-");
@@ -55,6 +65,21 @@ public class EchatBotController {
 
     if (action != null && action.equalsIgnoreCase(("brabrand.action"))) {
       String braBrand = queryResponse.getResult().getParameters().getBraBrand();
+      log.info("bra Brand: {}", braBrand);
+      URI buildUriBuilderMagento =
+          buildUriBuilderMagento("/index.php/rest/V1/products/" + braBrand);
+      httpGet = new HttpGet(buildUriBuilderMagento);
+      httpGet.addHeader("Authorization", "Bearer rmgex9ydihok1r3xjahlin8liyxbb83m");
+      httpGet.addHeader("accept", "application/json");
+      HttpResponse magentoTokenResponse = httpClient.execute(httpGet);
+      StringBuffer magentoTokenResponseBuilder = retrieveAylienApiResponse(magentoTokenResponse);
+      log.info("response from magento api: {}", magentoTokenResponseBuilder);
+      Product product =
+          objectMapper.readValue(magentoTokenResponseBuilder.toString(), Product.class);
+
+      if (product.getName() == null || product.getName().trim().equals("")) {
+        reply = "Sorry, we dont have " + braBrand + " at this moment";
+      }
       // Now do something with the brand
     } else if (action != null && action.equalsIgnoreCase("user.bra.size.action")) {
       if (braSize != null && braSize.size() > 0) {
@@ -82,7 +107,7 @@ public class EchatBotController {
     }
   }
 
-  private URI buildUriBuilder(String query) throws URISyntaxException {
+  private URI buildUriBuilderApiAi(String query) throws URISyntaxException {
 
     // https://api.api.ai/v1/query?v=20150910&query=Hi&lang=en&sessionId=d5813c606f1543069cfe0b522c533d54
     return new URIBuilder()
@@ -94,6 +119,12 @@ public class EchatBotController {
         .addParameter("lang", "en")
         .addParameter("sessionId", "d5813c606f1543069cfe0b522c533d54")
         .build();
+  }
+
+  private URI buildUriBuilderMagento(String uriPath) throws URISyntaxException {
+
+    // https://api.api.ai/v1/query?v=20150910&query=Hi&lang=en&sessionId=d5813c606f1543069cfe0b522c533d54
+    return new URIBuilder().setScheme("http").setHost("localhost").setPath(uriPath).build();
   }
 
   private StringBuffer retrieveAylienApiResponse(HttpResponse rawResponse) throws IOException {
