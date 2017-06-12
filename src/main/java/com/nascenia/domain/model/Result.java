@@ -9,7 +9,17 @@ public class Result {
 
   private Parameters parameters;
 
+  private String braBrand;
+
   public Result() {}
+
+  public String getBraBrand() {
+    return braBrand;
+  }
+
+  public void setBraBrand(String braBrand) {
+    this.braBrand = braBrand;
+  }
 
   public Parameters getParameters() {
     return parameters;

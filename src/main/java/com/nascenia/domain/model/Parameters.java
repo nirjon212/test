@@ -11,7 +11,37 @@ public class Parameters {
 
   private String braBrand;
 
+  private String pantyBrand;
+
+  private String underWearBrand;
+
+  private String underWearSize;
+
   public Parameters() {}
+
+  public String getUnderWearSize() {
+    return underWearSize;
+  }
+
+  public void setUnderWearSize(String underWearSize) {
+    this.underWearSize = underWearSize;
+  }
+
+  public String getUnderWearBrand() {
+    return underWearBrand;
+  }
+
+  public void setUnderWearBrand(String underWearBrand) {
+    this.underWearBrand = underWearBrand;
+  }
+
+  public String getPantyBrand() {
+    return pantyBrand;
+  }
+
+  public void setPantyBrand(String pantyBrand) {
+    this.pantyBrand = pantyBrand;
+  }
 
   public String getBraBrand() {
     return braBrand;

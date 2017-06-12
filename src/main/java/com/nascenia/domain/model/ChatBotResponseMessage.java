@@ -7,11 +7,22 @@ public class ChatBotResponseMessage {
 
   private byte[] bytes;
 
+  private String uri;
+
   public ChatBotResponseMessage() {}
 
-  public ChatBotResponseMessage(String reply, byte[] bytes) {
+  public ChatBotResponseMessage(String reply, byte[] bytes, String uri) {
     this.reply = reply;
     this.bytes = bytes;
+    this.uri = uri;
+  }
+
+  public String getUri() {
+    return uri;
+  }
+
+  public void setUri(String uri) {
+    this.uri = uri;
   }
 
   public String getReply() {

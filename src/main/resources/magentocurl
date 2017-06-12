@@ -2,7 +2,11 @@ curl -X POST "http://localhost/index.php/rest/V1/integration/admin/token" -H "Co
 
 curl -X GET "http://localhost/index.php/rest/V1/products/Elomi" -H "Authorization: Bearer rmgex9ydihok1r3xjahlin8liyxbb83m"
 
+ Magento Admin URI: /admin_1kyz09
 
+ image location: http://localhost/pub/media/catalog/product/t/e/testbra.jpeg
+
+ curl -X GET "http://localhost/index.php/V1/categories/4" -H "Authorization: Bearer rmgex9ydihok1r3xjahlin8liyxbb83m"
 
 
 {
