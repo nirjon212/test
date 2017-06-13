@@ -15,7 +15,9 @@ public class CommonUtility {
   private static String MAGENTO_URI = "http://localhost/pub/media/catalog/product/";
 
   public String findImageUri(Product product) {
-    if (product == null || product.getMedia_gallery_entries() == null) return "";
+    if (product == null
+        || product.getMedia_gallery_entries() == null
+        || product.getMedia_gallery_entries().size() == 0) return "";
     return MAGENTO_URI + product.getMedia_gallery_entries().get(0).getFile().replaceAll("\\\\", "");
   }
 

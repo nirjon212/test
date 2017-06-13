@@ -24,6 +24,20 @@ public class EchatBotController {
 
   private static final String PRODUCT_COST_MESSAGE = "<br /><b>its costs around ";
 
+  private static final String BRABRAND_ACTION = "brabrand.action";
+
+  private static final String USER_BRA_SIZE_ACTION = "user.bra.size.action";
+
+  private static final String PANTYBRAND_ACTION = "pantybrand.action";
+
+  private static final String MAN_UNDERWEAR_BRAND_ACTION = "man.underwear.brand.action";
+
+  private static final String BUY_UNDERWEAR_SIZE_ACTION = "buy.underwear.size.action";
+
+  private static final String MAN_CONDOM_BRAND_ACTION = "man.condom.brand.action";
+
+  private static final String HIJABBRAND_ACTION = "hijabbrand.action";
+
   @Autowired private ApiAiRestService apiAiRestService;
 
   @Autowired private MagentoRestService magentoRestService;
@@ -34,74 +48,85 @@ public class EchatBotController {
   public ChatBotResponseMessage sendChatMessageToDestination(@RequestParam("query") String query)
       throws URISyntaxException, IOException {
 
-    QueryResponse queryResponse = apiAiRestService.retrieveConversation(query);
-    String reply = queryResponse.getResult().getFulfillment().getSpeech();
-    String action = queryResponse.getResult().getAction();
+    try {
 
-    List<String> braSize = queryResponse.getResult().getParameters().getBraSize();
-    String underWearSize = queryResponse.getResult().getParameters().getUnderWearSize();
-    byte[] bytes = null;
-    String imageURI = "";
+      QueryResponse queryResponse = apiAiRestService.retrieveConversation(query);
+      String reply = queryResponse.getResult().getFulfillment().getSpeech();
+      String action = queryResponse.getResult().getAction();
 
-    if (action != null && action.equalsIgnoreCase(("brabrand.action"))) {
+      List<String> braSize = queryResponse.getResult().getParameters().getBraSize();
+      String underWearSize = queryResponse.getResult().getParameters().getUnderWearSize();
+      byte[] bytes = null;
+      String imageURI = "";
 
-      String braBrand = queryResponse.getResult().getParameters().getBraBrand();
-      log.info("bra Brand: {}", braBrand);
-      Product product = magentoRestService.retrieveProductDetails(braBrand);
-      reply = commonUtility.generateProductExistsMessage(reply, braBrand, product);
-      imageURI = commonUtility.findImageUri(product);
-    } else if (action != null && action.equalsIgnoreCase("user.bra.size.action")) {
-      if (braSize != null && braSize.size() > 0) {
-        String braBrand = queryResponse.getResult().getParameters().getBraBrand();
-        Product product = magentoRestService.retrieveProductDetails(braBrand);
-        boolean isProductInStock =
-            product.getExtension_attributes().getStock_item().isIs_in_stock();
-        if (isProductInStock) reply = reply + PRODUCT_COST_MESSAGE + product.getPrice() + "</b>";
-        else reply = "Sorry, we dont have " + braBrand + " at this moment";
+      switch (action) {
+        case BRABRAND_ACTION:
+          String braBrand = queryResponse.getResult().getParameters().getBraBrand();
+          log.info("bra Brand: {}", braBrand);
+          Product product = magentoRestService.retrieveProductDetails(braBrand);
+          reply = commonUtility.generateProductExistsMessage(reply, braBrand, product);
+          imageURI = commonUtility.findImageUri(product);
+          break;
+        case USER_BRA_SIZE_ACTION:
+          if (braSize != null && braSize.size() > 0) {
+            braBrand = queryResponse.getResult().getParameters().getBraBrand();
+            product = magentoRestService.retrieveProductDetails(braBrand);
+            boolean isProductInStock =
+                product.getExtension_attributes().getStock_item().isIs_in_stock();
+            if (isProductInStock)
+              reply = reply + PRODUCT_COST_MESSAGE + product.getPrice() + "</b>";
+            else reply = "Sorry, we dont have " + braBrand + " at this moment";
+          }
+          break;
+        case PANTYBRAND_ACTION:
+          String pantyBrand = queryResponse.getResult().getParameters().getPantyBrand();
+          log.info("panty Brand: {}", pantyBrand);
+          product = magentoRestService.retrieveProductDetails(pantyBrand);
+          if (product.getName() == null || product.getName().trim().equals("")) {
+            reply = "Sorry, we dont have " + pantyBrand + " at this moment";
+          }
+          imageURI = commonUtility.findImageUri(product);
+          break;
+        case MAN_UNDERWEAR_BRAND_ACTION:
+          String underWearBrand = queryResponse.getResult().getParameters().getUnderWearBrand();
+          log.info("underwear Brand: {}", underWearBrand);
+          product = magentoRestService.retrieveProductDetails(underWearBrand);
+          reply = commonUtility.generateProductExistsMessage(reply, underWearBrand, product);
+          imageURI = commonUtility.findImageUri(product);
+          break;
+        case BUY_UNDERWEAR_SIZE_ACTION:
+          if (underWearSize != null && underWearSize.trim().equals("")) {
+            underWearBrand = queryResponse.getResult().getParameters().getUnderWearBrand();
+            log.info("underwear brand {}", underWearBrand);
+            product = magentoRestService.retrieveProductDetails(underWearBrand);
+            boolean isProductInStock =
+                product.getExtension_attributes().getStock_item().isIs_in_stock();
+            if (!isProductInStock)
+              reply = reply + PRODUCT_COST_MESSAGE + product.getPrice() + "</b>";
+          }
+          break;
+        case MAN_CONDOM_BRAND_ACTION:
+          String condomBrand = queryResponse.getResult().getParameters().getCondomBrand();
+          log.info("condom Brand: {}", condomBrand);
+          product = magentoRestService.retrieveProductDetails(condomBrand);
+          reply = commonUtility.generateProductExistsMessage(reply, condomBrand, product);
+          imageURI = commonUtility.findImageUri(product);
+          break;
+        case HIJABBRAND_ACTION:
+          String hijabBrand = queryResponse.getResult().getParameters().getHijabBrand();
+          log.info("hijab Brand: {}", hijabBrand);
+          product = magentoRestService.retrieveProductDetails(hijabBrand);
+          reply = commonUtility.generateProductExistsMessage(reply, hijabBrand, product);
+          imageURI = commonUtility.findImageUri(product);
+          break;
       }
-    } else if (action.equalsIgnoreCase("pantybrand.action")) {
-      String pantyBrand = queryResponse.getResult().getParameters().getPantyBrand();
-      log.info("bra Brand: {}", pantyBrand);
-      Product product = magentoRestService.retrieveProductDetails(pantyBrand);
-      if (product.getName() == null || product.getName().trim().equals("")) {
-        reply = "Sorry, we dont have " + pantyBrand + " at this moment";
-      }
-      imageURI = commonUtility.findImageUri(product);
-    } else if (action.equalsIgnoreCase("user.panty.size.action")) {
-
-    } else if (action.equalsIgnoreCase("man.underwear.brand.action")) {
-      String underWearBrand = queryResponse.getResult().getParameters().getUnderWearBrand();
-      log.info("underwear Brand: {}", underWearBrand);
-      Product product = magentoRestService.retrieveProductDetails(underWearBrand);
-      reply = commonUtility.generateProductExistsMessage(reply, underWearBrand, product);
-      imageURI = commonUtility.findImageUri(product);
-    } else if (action.equalsIgnoreCase("buy.underwear.size.action")) {
-
-      if (underWearSize != null && underWearSize.trim().equals("")) {
-        String underWearBrand = queryResponse.getResult().getParameters().getUnderWearBrand();
-        log.info("underwear brand {}", underWearBrand);
-        Product product = magentoRestService.retrieveProductDetails(underWearBrand);
-        boolean isProductInStock =
-            product.getExtension_attributes().getStock_item().isIs_in_stock();
-        if (!isProductInStock) reply = reply + PRODUCT_COST_MESSAGE + product.getPrice() + "</b>";
-      }
-    } else if (action.equalsIgnoreCase("man.condom.brand.action")) {
-
-      String condomBrand = queryResponse.getResult().getParameters().getCondomBrand();
-      log.info("condom Brand: {}", condomBrand);
-      Product product = magentoRestService.retrieveProductDetails(condomBrand);
-      reply = commonUtility.generateProductExistsMessage(reply, condomBrand, product);
-      imageURI = commonUtility.findImageUri(product);
-    } else if (action.equalsIgnoreCase("hijabbrand.action")) {
-
-      String hijabBrand = queryResponse.getResult().getParameters().getHijabBrand();
-      log.info("hijab Brand: {}", hijabBrand);
-      Product product = magentoRestService.retrieveProductDetails(hijabBrand);
-      reply = commonUtility.generateProductExistsMessage(reply, hijabBrand, product);
-      imageURI = commonUtility.findImageUri(product);
+      log.info("image uri: {}", imageURI);
+      return new ChatBotResponseMessage(reply, bytes, imageURI);
+    } catch (Exception exception) {
+      log.info(exception.toString());
+      return new ChatBotResponseMessage(
+          "I have suffered from a mini stroke now. please say me hello or hi.", null, "");
     }
-    log.info("image uri: {}", imageURI);
-    return new ChatBotResponseMessage(reply, bytes, imageURI);
   }
 
   public void createEntity() throws URISyntaxException, IOException {
