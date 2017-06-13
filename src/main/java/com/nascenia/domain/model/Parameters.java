@@ -17,7 +17,27 @@ public class Parameters {
 
   private String underWearSize;
 
+  private String condomBrand;
+
+  private String hijabBrand;
+
   public Parameters() {}
+
+  public String getHijabBrand() {
+    return hijabBrand;
+  }
+
+  public void setHijabBrand(String hijabBrand) {
+    this.hijabBrand = hijabBrand;
+  }
+
+  public String getCondomBrand() {
+    return condomBrand;
+  }
+
+  public void setCondomBrand(String condomBrand) {
+    this.condomBrand = condomBrand;
+  }
 
   public String getUnderWearSize() {
     return underWearSize;
