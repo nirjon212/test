@@ -1,8 +1,5 @@
 package com.nascenia.domain.model;
 
-import com.nascenia.domain.model.Items.StockItems;
-import org.codehaus.groovy.transform.SynchronizedASTTransformation;
-
 import java.util.Date;
 import java.util.List;
 
