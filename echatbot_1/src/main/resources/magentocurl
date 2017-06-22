@@ -1,0 +1,122 @@
+curl -X POST "http://localhost/index.php/rest/V1/integration/admin/token" -H "Content-Type:application/json" -d '{"username":"", "password":""}'
+
+curl -X GET "http://localhost/index.php/rest/V1/products/Elomi" -H "Authorization: Bearer rmgex9ydihok1r3xjahlin8liyxbb83m"
+
+ Magento Admin URI: /admin_1kyz09
+
+ image location: http://localhost/pub/media/catalog/product/t/e/testbra.jpeg
+
+ curl -X GET "http://localhost/index.php/V1/categories/4" -H "Authorization: Bearer rmgex9ydihok1r3xjahlin8liyxbb83m"
+
+
+{
+   "id":1,
+   "sku":"Elomi",
+   "name":"Elomi",
+   "attribute_set_id":4,
+   "price":120,
+   "status":1,
+   "visibility":4,
+   "type_id":"simple",
+   "created_at":"2017-06-09 08:42:10",
+   "updated_at":"2017-06-09 08:42:10",
+   "weight":0.05,
+   "extension_attributes":{
+      "stock_item":{
+         "item_id":1,
+         "product_id":1,
+         "stock_id":1,
+         "qty":4,
+         "is_in_stock":true,
+         "is_qty_decimal":false,
+         "show_default_notification_message":false,
+         "use_config_min_qty":true,
+         "min_qty":0,
+         "use_config_min_sale_qty":1,
+         "min_sale_qty":1,
+         "use_config_max_sale_qty":true,
+         "max_sale_qty":10000,
+         "use_config_backorders":true,
+         "backorders":0,
+         "use_config_notify_stock_qty":true,
+         "notify_stock_qty":1,
+         "use_config_qty_increments":true,
+         "qty_increments":0,
+         "use_config_enable_qty_inc":true,
+         "enable_qty_increments":false,
+         "use_config_manage_stock":true,
+         "manage_stock":true,
+         "low_stock_date":null,
+         "is_decimal_divided":false,
+         "stock_status_changed_auto":0
+      }
+   },
+   "product_links":[
+
+   ],
+   "options":[
+
+   ],
+   "media_gallery_entries":[
+
+   ],
+   "tier_prices":[
+
+   ],
+   "custom_attributes":[
+      {
+         "attribute_code":"meta_title",
+         "value":"Elomi"
+      },
+      {
+         "attribute_code":"meta_keyword",
+         "value":"Elomi"
+      },
+      {
+         "attribute_code":"meta_description",
+         "value":"Elomi "
+      },
+      {
+         "attribute_code":"news_from_date",
+         "value":"2017-06-09 00:00:00"
+      },
+      {
+         "attribute_code":"news_to_date",
+         "value":"2017-06-30 00:00:00"
+      },
+      {
+         "attribute_code":"category_ids",
+         "value":[
+
+         ]
+      },
+      {
+         "attribute_code":"options_container",
+         "value":"container2"
+      },
+      {
+         "attribute_code":"required_options",
+         "value":"0"
+      },
+      {
+         "attribute_code":"has_options",
+         "value":"0"
+      },
+      {
+         "attribute_code":"country_of_manufacture",
+         "value":"US"
+      },
+      {
+         "attribute_code":"url_key",
+         "value":"elomi"
+      },
+      {
+         "attribute_code":"tax_class_id",
+         "value":"2"
+      },
+      {
+         "attribute_code":"gift_message_available",
+         "value":"2"
+      }
+   ]
+}

@@ -1,0 +1,1 @@
+curl -k -H "Content-Type: application/json; charset=utf-8" -H "Authorization: Bearer d5813c606f1543069cfe0b522c533d54" --data " {'name':'Utilities','entries':[{'value':'Electricity','synonyms':['electricity','electrical']},{'value':'Gas','synonyms':['gas','natural gas']},{'value':'Water','synonyms':['water']}]}" "https://api.api.ai/v1/entities?v=20150910"
