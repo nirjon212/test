@@ -1,0 +1,161 @@
+[
+   {
+      "id":"127370c5-38ae-4c0f-bbf9-cc3b3551a795",
+      "name":"no - compose-anniversary",
+      "state":"LOADED",
+      "contextIn":[
+         "no-compose",
+         "bouquet"
+      ],
+      "events":[
+
+      ],
+      "parameters":[
+         {
+            "name":"compose",
+            "value":"no"
+         },
+         {
+            "name":"occasion",
+            "value":"anniversary"
+         }
+      ],
+      "contextOut":[
+
+      ],
+      "actions":[
+
+      ],
+      "priority":500000,
+      "fallbackIntent":false
+   },
+   {
+      "id":"3b539784-0f54-49ee-a62c-90de9b5cd31f",
+      "name":"compose",
+      "state":"LOADED",
+      "contextIn":[
+         "greeting"
+      ],
+      "events":[
+
+      ],
+      "parameters":[
+
+      ],
+      "contextOut":[
+         {
+            "name":"compose",
+            "parameters":{
+
+            },
+            "lifespan":5
+         }
+      ],
+      "actions":[
+         "bouquet.compose"
+      ],
+      "priority":500000,
+      "fallbackIntent":false
+   },
+   {
+      "id":"3bc01370-e9bf-471c-b491-a8d891f3f9f2",
+      "name":"no - compose",
+      "state":"LOADED",
+      "contextIn":[
+         "greeting"
+      ],
+      "events":[
+
+      ],
+      "parameters":[
+         {
+            "name":"compose",
+            "value":"no"
+         },
+         {
+            "dataType":"@common-vocabulary",
+            "name":"common-vocabulary",
+            "value":"$common-vocabulary",
+            "isList":false
+         }
+      ],
+      "contextOut":[
+         {
+            "name":"no-compose",
+            "parameters":{
+
+            },
+            "lifespan":5
+         },
+         {
+            "name":"greeting",
+            "parameters":{
+
+            },
+            "lifespan":5
+         }
+      ],
+      "actions":[
+         "no-compose"
+      ],
+      "priority":500000,
+      "fallbackIntent":false
+   },
+   { },
+   { },
+   { },
+   { },
+   { },
+   { },
+   { },
+   { },
+   { },
+   { },
+   {
+      "id":"eb35fc65-af76-4873-ace6-e7882da1e62c",
+      "name":"no-add - compose-choose",
+      "state":"LOADED",
+      "contextIn":[
+         "bouquet",
+         "compose-add"
+      ],
+      "events":[
+
+      ],
+      "parameters":[
+         {
+            "name":"flower-1",
+            "value":"#bouquet.flower-1"
+         },
+         {
+            "name":"amount-1",
+            "value":"#bouquet.amount-1"
+         },
+         {
+            "name":"color-1",
+            "value":"#bouquet.color-1"
+         },
+         {
+            "name":"flower-2",
+            "value":"#bouquet.flower-2"
+         },
+         {
+            "name":"amount-2",
+            "value":"#bouquet.amount-2"
+         },
+         {
+            "name":"color-2",
+            "value":"#bouquet.color-2"
+         }
+      ],
+      "contextOut":[
+
+      ],
+      "actions":[
+         "bouquet.ready"
+      ],
+      "priority":500000,
+      "fallbackIntent":false
+   },
+   { }
+]
