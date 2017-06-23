@@ -20,7 +20,15 @@ import java.util.List;
 @RestController
 public class EchatBotController {
 
-  private static final Logger log = LoggerFactory.getLogger(EchatBotController.class);
+  private static final Logger log = Logge
+
+Mapowipqowipoqpiwoipoqwipqiwp
+
+asasasqpwoqw[ 
+
+
+
+qw\]q[wq]rFactory.getLogger(EchatBotController.class);
 
   private static final String PRODUCT_COST_MESSAGE = "<br /><b>its costs around ";
 
